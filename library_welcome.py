@@ -6,7 +6,7 @@ def main():
     root = tk.Tk()
 
     # Set the title of the window
-    root.title("Library Management System")
+    root.title("欢迎进入图书馆")
 
     # Set a reasonable initial size for the window
     root.geometry("400x300")
