@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import font as tkFont # Import font module
+import user_auth
+from tkinter import messagebox
 
 def main():
     # Create the main application window
@@ -74,14 +76,26 @@ def main():
             # Get login form details
             login_user = username_entry.get()
             login_pass = password_entry.get()
-            print(f"Login attempt: Username: {login_user}, Password: {login_pass}")
+            success, message = user_auth.login_user(login_user, login_pass, user_auth.user_data)
+            if success:
+                messagebox.showinfo("Login Success", message)
+            else:
+                messagebox.showerror("Login Failed", message)
         elif current_form[0] == "register":
             # Get registration form details
             reg_user = reg_username_entry.get()
             reg_pass = reg_password_entry.get()
             reg_confirm_pass = confirm_password_entry.get()
-            reg_email = email_entry.get()
-            print(f"Registration attempt: Username: {reg_user}, Password: {reg_pass}, Confirm: {reg_confirm_pass}, Email: {reg_email}")
+            # reg_email = email_entry.get() # Email is not used in user_auth
+
+            if reg_pass != reg_confirm_pass:
+                messagebox.showerror("Registration Error", "Passwords do not match.")
+            else:
+                success, message = user_auth.register_user(reg_user, reg_pass, user_auth.user_data)
+                if success:
+                    messagebox.showinfo("Registration Success", message)
+                else:
+                    messagebox.showerror("Registration Failed", message)
         # No other states expected for current_form[0] that would require an else here
 
     # Variable to keep track of the current form
